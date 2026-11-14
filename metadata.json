@@ -1,0 +1,6 @@
+{
+  "name": "Revio AI - Smart QR & Google Maps Review Engine",
+  "description": "AI-powered Google Maps review system for businesses. Turn store visitors into 5-star reviews in 15 seconds with custom printable QR stands, multi-language AI review drafting, reputation protection, and automated owner replies.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

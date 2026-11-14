@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  body {
+    background-color: #f7f7f4;
+    color: #141413;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+  }
+
+  ::selection {
+    background-color: #d9ede8;
+    color: #0b4f4a;
+  }
+}
+
+.pb-safe {
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+}
+
+/* Print Styles for Printable Stand Studio */
+@media print {
+  header,
+  nav,
+  button,
+  .no-print,
+  .lg\:col-span-5 {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  #printable-card {
+    box-shadow: none !important;
+    border-width: 2px !important;
+    margin: 20mm auto !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    max-width: 140mm !important;
+  }
+}

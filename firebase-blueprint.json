@@ -1,0 +1,419 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Authenticated business owner or creator partner profile.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "maxLength": 160
+        },
+        "role": {
+          "type": "string",
+          "enum": ["owner", "creator"]
+        },
+        "referralCode": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 24,
+          "pattern": "^[A-Z0-9]+$"
+        },
+        "referredByCode": {
+          "type": "string",
+          "maxLength": 24
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["uid", "name", "email", "role", "referralCode", "createdAt", "updatedAt"]
+    },
+    "ReferralLookup": {
+      "title": "Referral Code Lookup",
+      "description": "Public non-PII mapping from creator referral code to creator UID.",
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 24,
+          "pattern": "^[A-Z0-9]+$"
+        },
+        "creatorUid": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["code", "creatorUid", "createdAt"]
+    },
+    "Business": {
+      "title": "Business Storefront",
+      "description": "Local business profile linked to Google Maps and printable QR stands.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "isPublic": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 140
+        },
+        "slug": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 140
+        },
+        "category": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "tagline": {
+          "type": "string",
+          "maxLength": 260
+        },
+        "address": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "city": {
+          "type": "string",
+          "maxLength": 120
+        },
+        "country": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "phone": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "website": {
+          "type": "string",
+          "maxLength": 300
+        },
+        "googlePlaceId": {
+          "type": "string",
+          "maxLength": 140
+        },
+        "googleReviewUrl": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "primaryColor": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "rating": {
+          "type": "number"
+        },
+        "reviewCount": {
+          "type": "number"
+        },
+        "customTags": {
+          "type": "array"
+        },
+        "staffMentions": {
+          "type": "array"
+        },
+        "aiReviewPromptGuide": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "thankYouTemplates": {
+          "type": "object",
+          "properties": {
+            "fiveStar": { "type": "string", "maxLength": 600 },
+            "fourStar": { "type": "string", "maxLength": 600 },
+            "lowStar": { "type": "string", "maxLength": 600 }
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "ownerId", "isPublic", "name", "slug", "category", "city", "googleReviewUrl", "createdAt", "updatedAt"]
+    },
+    "PrivateFeedback": {
+      "title": "Private Customer Feedback",
+      "description": "1-3 star customer feedback captured privately for business management.",
+      "type": "object",
+      "properties": {
+        "businessId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "businessOwnerId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "rating": {
+          "type": "number"
+        },
+        "tags": {
+          "type": "array"
+        },
+        "comments": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "customerName": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "customerEmail": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "customerPhone": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "status": {
+          "type": "string",
+          "enum": ["new", "contacted", "resolved"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["businessId", "businessOwnerId", "rating", "comments", "status", "createdAt", "updatedAt"]
+    },
+    "PayoutGateway": {
+      "title": "Creator Payout Gateway",
+      "description": "Creator partner payout destination and weekly schedule configuration.",
+      "type": "object",
+      "properties": {
+        "creatorId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "method": {
+          "type": "string",
+          "enum": ["stripe", "paypal", "wise_bank", "upi"]
+        },
+        "accountLabel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 140
+        },
+        "accountDetail": {
+          "type": "string",
+          "maxLength": 180
+        },
+        "country": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "currency": {
+          "type": "string",
+          "maxLength": 10
+        },
+        "autoWeeklyPayout": {
+          "type": "boolean"
+        },
+        "payoutDay": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "minimumThreshold": {
+          "type": "number"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["creatorId", "method", "accountLabel", "accountDetail", "country", "currency", "autoWeeklyPayout", "payoutDay", "minimumThreshold", "updatedAt"]
+    },
+    "ShopTransaction": {
+      "title": "Shop Referral Transaction",
+      "description": "Tracks a creator-referred business signup, $30 setup payment, and $10 commission.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "creatorId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "businessName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 140
+        },
+        "businessCategory": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "businessCity": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "ownerEmail": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "setupFeePaid": {
+          "type": "number"
+        },
+        "monthlyPlanAmount": {
+          "type": "number"
+        },
+        "commissionAmount": {
+          "type": "number"
+        },
+        "paymentStatus": {
+          "type": "string",
+          "enum": ["paid", "pending"]
+        },
+        "payoutStatus": {
+          "type": "string",
+          "enum": ["pending_weekly", "paid", "processing"]
+        },
+        "payoutBatchId": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "creatorId", "businessName", "businessCategory", "businessCity", "ownerEmail", "setupFeePaid", "monthlyPlanAmount", "commissionAmount", "paymentStatus", "payoutStatus", "createdAt", "updatedAt"]
+    },
+    "WeeklyPayout": {
+      "title": "Weekly Payout Batch",
+      "description": "Weekly disbursement record for a creator partner.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "creatorId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "weekLabel": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "periodRange": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "shopsCount": {
+          "type": "number"
+        },
+        "amount": {
+          "type": "number"
+        },
+        "method": {
+          "type": "string",
+          "enum": ["stripe", "paypal", "wise_bank", "upi"]
+        },
+        "destinationMasked": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "status": {
+          "type": "string",
+          "enum": ["paid", "scheduled", "processing"]
+        },
+        "paidAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "creatorId", "weekLabel", "periodRange", "shopsCount", "amount", "method", "destinationMasked", "status", "paidAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Authenticated user account profiles (PII restricted to owner)."
+    },
+    "/referralCodes/{code}": {
+      "schema": { "$ref": "#/entities/ReferralLookup" },
+      "description": "Publicly readable referral code to creator UID index."
+    },
+    "/businesses/{businessId}": {
+      "schema": { "$ref": "#/entities/Business" },
+      "description": "Storefront profiles for QR stand generation and customer review flow."
+    },
+    "/businesses/{businessId}/feedback/{feedbackId}": {
+      "schema": { "$ref": "#/entities/PrivateFeedback" },
+      "description": "Private 1-3 star customer feedback inbox scoped to parent business."
+    },
+    "/users/{userId}/gateway/{gatewayId}": {
+      "schema": { "$ref": "#/entities/PayoutGateway" },
+      "description": "Creator-only payout gateway settings."
+    },
+    "/users/{userId}/transactions/{txId}": {
+      "schema": { "$ref": "#/entities/ShopTransaction" },
+      "description": "Creator-only referred shop transactions and $10 commissions."
+    },
+    "/users/{userId}/payouts/{payoutId}": {
+      "schema": { "$ref": "#/entities/WeeklyPayout" },
+      "description": "Creator-only weekly payout batch history."
+    }
+  }
+}
